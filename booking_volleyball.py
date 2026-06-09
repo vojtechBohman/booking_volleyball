@@ -46,22 +46,29 @@ def execute_court_booking():
         page = context.new_page()
 
         try:
-            # 1. Open home page
+            # 1. Open home page with a relaxed load condition
             print(f"Navigating to: {BASE_URL}")
-            page.goto(BASE_URL)
-            page.wait_for_load_state("networkidle")
+            page.goto(BASE_URL, wait_until="domcontentloaded")
+            
+            # Instead of waiting for network to be completely idle,
+            # we explicitly wait for the main wrapper or top panel to appear.
+            page.wait_for_selector("#wrapper", timeout=15000)
+            print("Page DOM loaded successfully.")
 
             # 2. Handle Login if not automatically authenticated
             if page.locator("#show_button").is_visible():
                 print("Clicking login panel trigger...")
                 page.click("#show_button a")
-                page.wait_for_selector(".panelContent", state="visible")
+                # Wait for the login form container to be ready
+                page.wait_for_selector(".panelContent", state="visible", timeout=10000)
                 
                 print("Filling credentials...")
                 page.fill("input[name='email'], input[type='email']", USERNAME)
                 page.fill("input[name='password'], input[type='password']", PASSWORD)
                 page.click("input[type='submit'], button:has-text('Přihlásit'), .panelContent button")
-                page.wait_for_load_state("networkidle")
+                
+                # Wait for the user panel to confirm successful authentication
+                page.wait_for_selector(".userLoggedName", state="visible", timeout=15000)
             
             print("Login check complete.")
 
