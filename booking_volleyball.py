@@ -4,7 +4,7 @@ import time
 from datetime import datetime, timedelta
 from playwright.sync_api import sync_playwright
 # Importing stealth package to bypass Cloudflare
-from playwright_stealth import stealth_sync
+from playwright_stealth.stealth import stealth_sync
 
 # ==============================================================================
 # CONFIGURATION CONSTANTS
@@ -14,8 +14,8 @@ USERNAME = os.environ.get("BOOKING_USERNAME", "your_email@centrum.cz")
 PASSWORD = os.environ.get("BOOKING_PASSWORD", "your_password")
 
 TARGET_DATE = "2026-06-22"  
-TIME_START = "17:30"       
-TIME_END = "19:00"         
+TIME_START = "10:30"       
+TIME_END = "12:00"         
 SPORT_TAB_ID = "7" 
 # ==============================================================================
 
