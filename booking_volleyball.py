@@ -59,12 +59,12 @@ async def execute_court_booking():
             await page.wait_for_timeout(1000)
             
             print("Filling credentials...")
-            # Target fields inside the opened panel
-            await page.fill("input[type='email'], input[name='email'], input[type='text']", USERNAME)
+            await page.fill("input[type='email'], input[name='email']", USERNAME)
             await page.fill("input[type='password']", PASSWORD)
             
-            print("Submitting login form...")
-            await page.click("#panel button, #panel input[type='submit'], button:has-text('Přihlásit')")
+            print("Submitting login form via userLoginSubmit...")
+            # FIXED: Targeting the exact class provided from the HTML source
+            await page.click("a.userLoginSubmit")
             
             # Confirm successful login by waiting for the sign-out link or logged-in class
             await page.wait_for_selector("a:has-text('Odhlásit'), .loggedIn", timeout=15000)
