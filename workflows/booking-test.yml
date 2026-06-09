@@ -23,10 +23,8 @@ jobs:
 
       - name: Run booking script
         env:
-          BOOKING_URL: ${{ secrets.BOOKING_URL }}
           BOOKING_USERNAME: ${{ secrets.BOOKING_USERNAME }}
           BOOKING_PASSWORD: ${{ secrets.BOOKING_PASSWORD }}
-          BOOKING_TIME: "18:00"
         run: python booking.py
 
       # This step runs ONLY if the previous script fails
