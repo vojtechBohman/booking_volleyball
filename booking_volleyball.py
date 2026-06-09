@@ -3,8 +3,8 @@ import sys
 import time
 from datetime import datetime, timedelta
 from playwright.sync_api import sync_playwright
-# Importing stealth package to bypass Cloudflare
-from playwright_stealth.stealth import stealth_sync
+# Replace the previous playwright_stealth import with this:
+from playwright_stealth import stealth
 
 # ==============================================================================
 # CONFIGURATION CONSTANTS
@@ -56,7 +56,7 @@ def execute_court_booking():
         
         page = context.new_page()
         # Activating the stealth scripts on the active page
-        stealth_sync(page)
+        stealth(page)
 
         try:
             print(f"Navigating to: {BASE_URL}")
